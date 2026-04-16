@@ -2,8 +2,6 @@ package com.jogo.model.inimigos.formacao;
 
 import com.jogo.model.inimigos.Americano;
 import com.jogo.model.jogadores.Jogador;
-import com.jogo.model.projetil.Projetil;
-import com.jogo.sonoro.Sons;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -57,23 +55,12 @@ public class Armada {
         //verefica se o inimigo foi acertado por um projétil do jogador, e tira a vida dele
         for (Americano americano : armada) {
             Americano prox;
-            Americano anter;
             
             if (it.hasNext()) {
                 prox = it.next();    
             }
             
             americano.uptade(player);
-        }
-    }
-    
-    public void colisoes(Jogador player, Projetil projetl) {
-        for (Americano americanos : armada){
-             if (americanos.getHitBox().colide(projetl.getHitBox())){
-                 americanos.atualizacaoPos_colisao(projetl.dano);
-                 projetl.acertou = true;
-                 Sons.sofrerDano();
-            }
         }
     }
     

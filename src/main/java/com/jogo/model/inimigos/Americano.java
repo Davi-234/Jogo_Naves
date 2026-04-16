@@ -51,28 +51,39 @@ public class Americano extends Inimigo{
         reniciaCooldown();
 
         //IA do americano
+        IA(player);
         
         //----------Elemina os disparos que estão como lixo de mémoria--------//
-        Iterator<Projetil> itDisparos = disparos.iterator();
+        // Pede à lista de projéteis um iterador.
+        // O iterador é um objeto que sabe percorrer a lista
+        // sem perder a referência interna dos elementos.
+        Iterator<Projetil> it = disparos.iterator();
 
-        while (itDisparos.hasNext()) {
-            Projetil p = itDisparos.next();
-            
-            if (p.acertou || (p.posY >= 3000)) {
-                itDisparos.remove();
+        // Enquanto ainda existir pelo menos um elemento
+        // que não foi visitado pelo iterador...
+        while (it.hasNext()) {
+            // Avança o iterador para o próximo elemento
+            // e devolve esse elemento.
+            Projetil p = it.next();
+            p.mover();
+            //p.moverCima();
+
+            if (p.acertou) {
+                it.remove(); // morte limpa, sem exceção
             }
         }
         //--------------------------------------------------------------------//
     }
     
-    private void IA(){
-        
+    private void IA(Jogador player){
+        if (campoDvisao(player)) {
+            atirar();
+        }
     }
     
     //------------------------------------------------------------------------//
     private boolean campoDvisao(Jogador player){
-        return posX >= player.posX && (posX + largura) <= (player.posX + player.largura) &&
-               posY >= player.posY && (posY + altura) <= (player.posY + player.altura);
+        return player.posY > this.posY && Math.abs(player.posX - this.posX) < 50;
     }
 
     @Override

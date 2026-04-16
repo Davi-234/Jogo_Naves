@@ -165,24 +165,22 @@ public class Jogo extends JFrame {
 
                 if (input.esc) {
                     stateGame = EstadosJogo.JOGANDO;
-                    //System.exit(0);
                 }
-
-                //*
-                player.vida--;
+                
                 if (player.vida <= 0) {
                     System.exit(0);
                 }
-                //*/
+                
+                System.exit(0);//por enquanto o jogo não tem pause
 
                 entidades.repaint();
             }
 
             if (stateGame == EstadosJogo.JOGANDO) {
-                /*player.vida--;
+                //player.vida--;
                 if (player.vida <= 0) {
                     System.exit(0);
-                }*/
+                }
 
                 if (armada.getArmadaSize() <= 0) {
                     armada = new Armada(getWidth(), getHeight());

@@ -1,0 +1,1 @@
+O presente projeto consiste no desenvolvimento de um jogo de naves simples, inspirado em clássicos como Space Invaders e Asteroids. Sua implementação foi realizada exclusivamente com bibliotecas padrão da linguagem Java, com a interface gráfica construída integralmente por meio da biblioteca Java Swing. 

@@ -1,8 +1,8 @@
 package com.jogo.model;
 
 import com.jogo.regras.colisao.HitBox;
-import com.jogo.regras.estados.Estado_Direcao;
-import com.jogo.regras.estados.Estado_comportamento;
+import com.jogo.regras.estados.Direction;
+import com.jogo.regras.estados.Behavior;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import javax.swing.ImageIcon;
@@ -25,11 +25,11 @@ public abstract class Entity {
     public int lifePoints;
     public int damege;
     
-    private int width_sprite;
-    private int height_sprite;
+    private final int width_sprite;
+    private final int height_sprite;
     
-    public Estado_Direcao direction;
-    public Estado_comportamento state_behavier;
+    public Direction direction;
+    public Behavior state_behavier;
 
     public Entity(int x, int y, int largura, int altura, int x_sprite, int y_sprite) {
         this.posX = x;
@@ -52,10 +52,10 @@ public abstract class Entity {
         sprite = new ImageIcon(getClass().getResource(url)).getImage();
     }
 
-    public abstract void atualizacaoPos_colisao(int damege);
+    public abstract void uptade_collison(int damege);
 
-    public void reformular_Posicoes() {
-        if (direction == Estado_Direcao.NORTE || direction == Estado_Direcao.SUL) {
+    public void uptade_positions() {
+        if (direction == Direction.NORTE || direction == Direction.SUL) {
             height = Math.round(escala_height *  height_sprite); //erro de tamanho dos sprites
             width = Math.round(escala_width * width_sprite);
         } else {

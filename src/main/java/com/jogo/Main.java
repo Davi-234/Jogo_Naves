@@ -3,13 +3,13 @@ package com.jogo;
 import com.jogo.hub.HUB;
 import com.jogo.input.InputKeyboard;
 import com.jogo.model.jogadores.Player;
-import com.jogo.model.inimigos.Americano;
+import com.jogo.model.inimigos.Americam;
 import com.jogo.model.inimigos.formacao.Armada;
-import com.jogo.model.objetos.Asteroide;
-import com.jogo.model.objetos.SistemaDeAsteroides;
-import com.jogo.model.projetil.Projetil;
-import com.jogo.regras.colisao.SistemaDeColisao;
-import com.jogo.sonoro.Sons;
+import com.jogo.model.objetos.Asteroid;
+import com.jogo.model.objetos.Systeam_Asteroid;
+import com.jogo.model.projetil.Projectile;
+import com.jogo.regras.colisao.Systeam_Collisons;
+import com.jogo.sonoro.Sounds;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -32,8 +32,8 @@ public class Main extends JFrame {
     Armada armada;
     InputKeyboard input = new InputKeyboard();
     HUB objetosHUB;
-    EstadosJogo stateGame = EstadosJogo.JOGANDO;
-    SistemaDeAsteroides asteroides;
+    StatesMain stateGame = StatesMain.JOGANDO;
+    Systeam_Asteroid asteroides;
 
     Image fundo = new ImageIcon(getClass().getResource("/cenario/fundo.png")).getImage();
 
@@ -74,17 +74,17 @@ public class Main extends JFrame {
                 if (player.lifePoints > 0) {
                     player.desenharSprite(g2); // Desenha o "personagem
                 }
-                for (Projetil p : player.disparos) {
+                for (Projectile p : player.disparos) {
                     p.desenharSprite(g2);
                 }
                 //------------------------------------------------------------//
 
                 //--------------------------Armada----------------------------//
                 if (armada != null) {
-                    for (Americano americam : armada.armada) {
+                    for (Americam americam : armada.armada) {
                         americam.desenharSprite(g2);
 
-                        for (Projetil projtl : americam.disparos) {
+                        for (Projectile projtl : americam.disparos) {
                             projtl.desenharSprite(g2);
                         }
                     }
@@ -93,14 +93,14 @@ public class Main extends JFrame {
 
                 //--------------------Sistemas dos asteroides-----------------//
                 if (asteroides != null) {
-                    for (Asteroide m : asteroides.asteroides) {
+                    for (Asteroid m : asteroides.asteroides) {
                         m.desenharSprite(g2);
                     }
                 }
                 //------------------------------------------------------------//
 
                 //--------------------------Pause-----------------------------//
-                if (stateGame == EstadosJogo.PAUSADO && objetosHUB != null) {
+                if (stateGame == StatesMain.PAUSADO && objetosHUB != null) {
                     objetosHUB.getHUB_Pause(g2, this);
                 }
                 //------------------------------------------------------------//
@@ -153,16 +153,16 @@ public class Main extends JFrame {
         player.posY = ((getHeight() - player.height));
         objetosHUB = new HUB(player.lifePoints, getWidth(), getHeight());
         armada = new Armada(getWidth(), getHeight());
-        asteroides = new SistemaDeAsteroides(getWidth(), getHeight());
+        asteroides = new Systeam_Asteroid(getWidth(), getHeight());
 
-        Sons.trilhaSonora();
+        Sounds.trilhaSonora();
 
         timer = new Timer(10, e -> {
-            if (stateGame == EstadosJogo.PAUSADO) {
+            if (stateGame == StatesMain.PAUSADO) {
                 //System.exit(0);
 
                 if (input.esc) {
-                    stateGame = EstadosJogo.JOGANDO;
+                    stateGame = StatesMain.JOGANDO;
                 }
 
                 if (player.lifePoints <= 0) {
@@ -174,7 +174,7 @@ public class Main extends JFrame {
                 entidades.repaint();
             }
 
-            if (stateGame == EstadosJogo.JOGANDO) {
+            if (stateGame == StatesMain.JOGANDO) {
                 //player.vida--;
                 if (player.lifePoints <= 0) {
                     System.exit(0);
@@ -187,12 +187,12 @@ public class Main extends JFrame {
                 player.uptade(input, getWidth(), getHeight());
                 armada.uptade(player);
 
-                SistemaDeColisao.allCollisons(player, armada.armada, asteroides.asteroides);
+                Systeam_Collisons.allCollisons(player, armada.armada, asteroides.asteroides);
 
                 asteroides.uptade();
 
                 if (input.esc) {
-                    stateGame = EstadosJogo.PAUSADO;
+                    stateGame = StatesMain.PAUSADO;
                 }
             }
             objetosHUB = new HUB(player.lifePoints, getWidth(), getHeight());

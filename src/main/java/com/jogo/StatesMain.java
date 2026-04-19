@@ -1,6 +1,6 @@
 package com.jogo;
 
-public enum EstadosJogo {
+public enum StatesMain {
     JOGANDO,
     PAUSADO;
 }

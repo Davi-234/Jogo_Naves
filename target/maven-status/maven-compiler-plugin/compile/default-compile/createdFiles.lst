@@ -3,14 +3,15 @@ com\jogo\Main$1.class
 com\jogo\model\objetos\SistemaDeAsteroides.class
 com\jogo\model\inimigos\formacao\Armada.class
 com\jogo\model\jogadores\Player$1.class
-com\jogo\model\inimigos\Americano.class
 com\jogo\EstadosJogo.class
 com\jogo\regras\colisao\HitBox.class
 com\jogo\model\objetos\Asteroide.class
+com\jogo\model\inimigos\Americam.class
 com\jogo\regras\colisao\Colide.class
 com\jogo\Main.class
 com\jogo\hub\HUB.class
 com\jogo\model\inimigos\Inimigo.class
+com\jogo\model\inimigos\Americam$1.class
 com\jogo\model\projetil\Projetil.class
 com\jogo\sonoro\Sons.class
 com\jogo\input\InputKeyboard.class

@@ -1,6 +1,6 @@
 package com.jogo.regras;
 
-public interface Atirador {
+public interface Sniper {
     static final int TEMPO_TIRO = 300;
 
     void shot();

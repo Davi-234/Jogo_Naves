@@ -1,6 +1,6 @@
 package com.jogo.regras.estados;
 
-public enum Estado_Direcao {
+public enum Direction {
     NORTE, 
     SUL, 
     LESTE, 

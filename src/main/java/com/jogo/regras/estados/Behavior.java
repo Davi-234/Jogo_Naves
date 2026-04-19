@@ -1,6 +1,6 @@
 package com.jogo.regras.estados;
 
-public enum Estado_comportamento {
+public enum Behavior {
     ATACANDO,
     FUGINDO,
     ANDANDO;

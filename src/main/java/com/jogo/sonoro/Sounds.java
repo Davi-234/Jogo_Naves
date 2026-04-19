@@ -7,20 +7,20 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 
-public class Sons {
+public class Sounds {
 
     private static Clip trilha;
 
     private static void tocar(String caminho) {
         try {
-            URL url = Sons.class.getResource(caminho);
+            URL url = Sounds.class.getResource(caminho);
             AudioInputStream audio = AudioSystem.getAudioInputStream(url);
 
             Clip tocador = AudioSystem.getClip();
             tocador.open(audio);
             tocador.start();
         } catch (Exception ex) {
-            Logger.getLogger(Sons.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sounds.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -44,7 +44,7 @@ public class Sons {
                 return;
             }
 
-            URL url = Sons.class.getResource("/sons/trilhas/musica1.wav");
+            URL url = Sounds.class.getResource("/sons/trilhas/musica1.wav");
             AudioInputStream audio = AudioSystem.getAudioInputStream(url);
 
             trilha = AudioSystem.getClip();
@@ -52,7 +52,7 @@ public class Sons {
             trilha.loop(Clip.LOOP_CONTINUOUSLY);
 
         } catch (Exception ex) {
-            Logger.getLogger(Sons.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sounds.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -64,7 +64,7 @@ public class Sons {
                 return;
             }
 
-            URL url = Sons.class.getResource("/sons/trilhas/musica2.wav");
+            URL url = Sounds.class.getResource("/sons/trilhas/musica2.wav");
             AudioInputStream audio = AudioSystem.getAudioInputStream(url);
 
             trilha = AudioSystem.getClip();
@@ -72,7 +72,7 @@ public class Sons {
             trilha.loop(Clip.LOOP_CONTINUOUSLY);
 
         } catch (Exception ex) {
-            Logger.getLogger(Sons.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Sounds.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

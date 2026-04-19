@@ -1,13 +1,13 @@
 package com.jogo.model.inimigos.formacao;
 
-import com.jogo.model.inimigos.Americano;
+import com.jogo.model.inimigos.Americam;
 import com.jogo.model.jogadores.Player;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class Armada {
-    public List<Americano> armada;
+    public List<Americam> armada;
     
     public Armada(int X_tela, int Y_tela) {
         armada = new ArrayList<>();
@@ -35,16 +35,16 @@ public class Armada {
     }
 
     private void addA_Lista(int x) {
-        armada.add(new Americano(x, 47)); // 47 é o espaçamento do inicio da tela;
+        armada.add(new Americam(x, 47)); // 47 é o espaçamento do inicio da tela;
     }
 
     //------------------------------------------------------------------------//
     public void uptade(Player player) {
         //elemina a nave que não tem mais vida
-        Iterator<Americano> it = armada.iterator();
+        Iterator<Americam> it = armada.iterator();
 
         while (it.hasNext()) {
-            Americano a = it.next();
+            Americam a = it.next();
             
             if (a.lifePoints <= 0) {
                 player.ganharPontos(a.valorEmPts);
@@ -53,8 +53,8 @@ public class Armada {
         }
 
         //verefica se o inimigo foi acertado por um projétil do jogador, e tira a vida dele
-        for (Americano americano : armada) {
-            Americano prox;
+        for (Americam americano : armada) {
+            Americam prox;
             
             if (it.hasNext()) {
                 prox = it.next();    

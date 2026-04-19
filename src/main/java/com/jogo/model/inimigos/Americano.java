@@ -1,21 +1,22 @@
 package com.jogo.model.inimigos;
 
-import com.jogo.model.jogadores.Jogador;
+import com.jogo.model.jogadores.Player;
 import com.jogo.model.projetil.Projetil;
 import com.jogo.regras.estados.Estado_Direcao;
+import com.jogo.regras.estados.Estado_comportamento;
 import com.jogo.sonoro.Sons;
 import java.util.Iterator;
 import java.util.Random;
 
 public class Americano extends Inimigo{
     public Americano(int x, int y) {
-        super(x, y, (32*2), (32*2)); 
+        super(x, y, (32*2), (32*2), 32, 32); 
         setSprite("/personagens/inimigos/americanos.png");
         valorEmPts = 100;
-        vida  = 50;
-        ajuste_referente_a_escala_X = largura/32;
-        ajuste_referente_a_escala_Y = altura/32; // o sptite é 32 * 32
-        direcao = Estado_Direcao.SUL;
+        lifePoints  = 50;
+        escala_width = width/32;
+        escala_height = height/32; // o sptite é 32 * 32
+        direction = Estado_Direcao.SUL;
     }
 
     //-----------------------------Lógica de Atirar---------------------------//
@@ -24,14 +25,14 @@ public class Americano extends Inimigo{
     
     private void addLista() {
         if (new Random().nextBoolean()){
-            disparos.add(new Projetil(posX, (posY + altura), ajuste_referente_a_escala_X, ajuste_referente_a_escala_Y, direcao));
+            disparos.add(new Projetil(posX, (posY + height), escala_width, escala_height, direction));
         } else {
-            disparos.add(new Projetil((posX + Math.round(16 * ajuste_referente_a_escala_X)), (posY + altura), ajuste_referente_a_escala_X, ajuste_referente_a_escala_Y, direcao));//16 é a distancia entre os canhões, ou seja os tiros varia de canhão        
+            disparos.add(new Projetil((posX + Math.round(16 * escala_width)), (posY + height), escala_width, escala_height, direction));//16 é a distancia entre os canhões, ou seja os tiros varia de canhão        
         }
     }
     
     @Override
-    public void atirar(){        
+    public void shot(){        
         if (tempo <= 0) {
             addLista();
             Sons.disparo();
@@ -47,7 +48,7 @@ public class Americano extends Inimigo{
     //------------------------------------------------------------------------//
     
     @Override
-    public void uptade(Jogador player) {
+    public void uptade(Player player) {
         reniciaCooldown();
 
         //IA do americano
@@ -75,20 +76,27 @@ public class Americano extends Inimigo{
         //--------------------------------------------------------------------//
     }
     
-    private void IA(Jogador player){
-        if (campoDvisao(player)) {
-            atirar();
+    private void IA(Player player){
+        if (isSeeing(player)) {
+            shot();
+            state_behavier = Estado_comportamento.ATACANDO;
         }
+        
+        if (!player.disparos.isEmpty()&& isSeeing(player)) {
+            state_behavier = Estado_comportamento.FUGINDO;
+        }
+        //Adicionar algoritmo inimigo mover-se para uma posição distante do player para assim evitar ser acertado; o que ocorrerá após que pelo menos um inimigo tenha morrido.
+        //Se um inimigo estiver fugindo do jogador; o inimigo mais próximo irá para o campo de visão do jogador e atacará;
     }
     
     //------------------------------------------------------------------------//
-    private boolean campoDvisao(Jogador player){
+    private boolean isSeeing(Player player){
         return player.posY > this.posY && Math.abs(player.posX - this.posX) < 50;
     }
 
     @Override
     public void atualizacaoPos_colisao(int dano){
-        vida -= dano;
+        lifePoints -= dano;
     }
     
 }

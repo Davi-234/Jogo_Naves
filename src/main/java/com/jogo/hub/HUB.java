@@ -5,7 +5,7 @@ import java.awt.Image;
 import java.awt.image.ImageObserver;
 import javax.swing.ImageIcon;
 
-public class ObejetosHUB {
+public class HUB {
     private Image hearthHUB;
     private final Image pauseHUB = new ImageIcon(getClass().getResource("/hub/telas/pause.png")).getImage();
     
@@ -14,7 +14,7 @@ public class ObejetosHUB {
     private int posX_Pause = 102;
     private int posY_Pause = 102;
 
-    public ObejetosHUB(int vida, int tela_x, int tela_y) {        
+    public HUB(int vida, int tela_x, int tela_y) {        
         if (tela_x > 0) {
             posX_HUB_Vida = tela_x - (47 * 4); // este 4 multiplica a largura do sprite, mas aqui serve para coloca-lo na posição correta.
             posX_Pause = (int) tela_x * (1/2);
@@ -43,7 +43,7 @@ public class ObejetosHUB {
     }
     
     public void getHUB_Pause(Graphics2D g2, ImageObserver observer) {
-        g2.drawImage(pauseHUB, posX_Pause, posY_Pause, 113, 110, observer);
+        g2.drawImage(pauseHUB, posX_Pause, posY_Pause, 500, 500, observer);
     }
     
     public void getLife_HUB(Graphics2D g2, ImageObserver observer) {

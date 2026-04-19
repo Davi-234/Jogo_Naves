@@ -1,8 +1,8 @@
 package com.jogo;
 
-import com.jogo.hub.ObejetosHUB;
+import com.jogo.hub.HUB;
 import com.jogo.input.InputKeyboard;
-import com.jogo.model.jogadores.Jogador;
+import com.jogo.model.jogadores.Player;
 import com.jogo.model.inimigos.Americano;
 import com.jogo.model.inimigos.formacao.Armada;
 import com.jogo.model.objetos.Asteroide;
@@ -24,20 +24,20 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-public class Jogo extends JFrame {
+public class Main extends JFrame {
 
     Timer timer; //este timer atualiza tudo com exceção do jogador
     JPanel entidades;
-    Jogador player = new Jogador();
+    Player player = new Player();
     Armada armada;
     InputKeyboard input = new InputKeyboard();
-    ObejetosHUB objetosHUB = new ObejetosHUB(player.vida, 0, 0);
+    HUB objetosHUB;
     EstadosJogo stateGame = EstadosJogo.JOGANDO;
     SistemaDeAsteroides asteroides;
 
     Image fundo = new ImageIcon(getClass().getResource("/cenario/fundo.png")).getImage();
 
-    public Jogo() throws HeadlessException, LineUnavailableException {
+    public Main() throws HeadlessException, LineUnavailableException {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);//fechao o jframe só se for pedido pelo java
         this.setTitle("Jogo");
 
@@ -51,8 +51,6 @@ public class Jogo extends JFrame {
 
         gd.setFullScreenWindow(this);
         //--------------------------------------------------------------------//
-
-        //this.setExtendedState(JFrame.MAXIMIZED_BOTH);//posteriormente mude para que a barra de tarefas não apareça
         entidades = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -65,15 +63,15 @@ public class Jogo extends JFrame {
                 //---------------------Contador de pontos---------------------//
                 g2.setColor(Color.WHITE);
                 g2.setFont(new Font("Arial", Font.PLAIN, 29));
-                g2.drawString(("Pontuação: " + player.pontuacao), 0, 36);
+                g2.drawString(("Pontuação: " + player.points), 0, 36);
                 //------------------------------------------------------------//
 
                 //-------------------------Corações do player-----------------//
                 objetosHUB.getLife_HUB(g2, this);
                 //------------------------------------------------------------//
 
-                //--------------------------Jogador---------------------------//
-                if (player.vida > 0) {
+                //--------------------------Player---------------------------//
+                if (player.lifePoints > 0) {
                     player.desenharSprite(g2); // Desenha o "personagem
                 }
                 for (Projetil p : player.disparos) {
@@ -152,8 +150,8 @@ public class Jogo extends JFrame {
          * Teclado fala apenas com quem tem foco.
          * Quem não tem foco, não ouve nada.
          */
-        player.posY = ((getHeight() - player.altura));
-        objetosHUB = new ObejetosHUB(player.vida, getWidth(), getHeight());
+        player.posY = ((getHeight() - player.height));
+        objetosHUB = new HUB(player.lifePoints, getWidth(), getHeight());
         armada = new Armada(getWidth(), getHeight());
         asteroides = new SistemaDeAsteroides(getWidth(), getHeight());
 
@@ -166,19 +164,19 @@ public class Jogo extends JFrame {
                 if (input.esc) {
                     stateGame = EstadosJogo.JOGANDO;
                 }
-                
-                if (player.vida <= 0) {
+
+                if (player.lifePoints <= 0) {
                     System.exit(0);
                 }
-                
-                System.exit(0);//por enquanto o jogo não tem pause
+
+                //System.exit(0);//por enquanto o jogo não tem pause
 
                 entidades.repaint();
             }
 
             if (stateGame == EstadosJogo.JOGANDO) {
                 //player.vida--;
-                if (player.vida <= 0) {
+                if (player.lifePoints <= 0) {
                     System.exit(0);
                 }
 
@@ -189,23 +187,22 @@ public class Jogo extends JFrame {
                 player.uptade(input, getWidth(), getHeight());
                 armada.uptade(player);
 
-                SistemaDeColisao.allColisoes(player, armada.armada, asteroides.asteroides);
+                SistemaDeColisao.allCollisons(player, armada.armada, asteroides.asteroides);
 
-                asteroides = new SistemaDeAsteroides(getWidth(), getHeight());
+                asteroides.uptade();
 
                 if (input.esc) {
                     stateGame = EstadosJogo.PAUSADO;
                 }
             }
-
+            objetosHUB = new HUB(player.lifePoints, getWidth(), getHeight());
             entidades.repaint();
-            objetosHUB = new ObejetosHUB(player.vida, getWidth(), getHeight());
         });
         timer.start();
 
     }
 
     public static void main(String[] args) throws LineUnavailableException {
-        new Jogo();
+        new Main();
     }
 }

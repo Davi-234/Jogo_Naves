@@ -1,35 +1,35 @@
 package com.jogo.model.objetos;
 
-import com.jogo.model.Entidade;
+import com.jogo.model.Entity;
 import com.jogo.regras.estados.Estado_Direcao;
 
-public class Asteroide extends Entidade{
+public class Asteroide extends Entity{
     
     public Asteroide(int x, int y, int largura, int altura, Estado_Direcao direcao) {
-        super(x, y, largura, altura);
-        vida = 50;
-        velocidade = 2;
+        super(x, y, largura, altura, 38,29);
+        lifePoints = 50;
+        speed = 2;
         setSprite("/objetos/meteoro.png");
-        dano = 5;
-        this.direcao = direcao;
+        damege = 5;
+        this.direction = direcao;
     }
 
     @Override
     public void atualizacaoPos_colisao(int dano) {
-        vida -= dano;   
+        lifePoints -= dano;   
     }
     
     public void uptade(){
-        if (direcao == Estado_Direcao.NORTE) {
+        if (direction == Estado_Direcao.NORTE) {
             posY--;
         }
-        if (direcao == Estado_Direcao.SUL) {
+        if (direction == Estado_Direcao.SUL) {
             posY++;
         }
-        if (direcao == Estado_Direcao.OESTE) {
+        if (direction == Estado_Direcao.OESTE) {
             posX++;
         }
-        if (direcao == Estado_Direcao.LESTE) {
+        if (direction == Estado_Direcao.LESTE) {
             posX--;
         }
     }

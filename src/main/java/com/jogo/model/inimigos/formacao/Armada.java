@@ -1,7 +1,7 @@
 package com.jogo.model.inimigos.formacao;
 
 import com.jogo.model.inimigos.Americano;
-import com.jogo.model.jogadores.Jogador;
+import com.jogo.model.jogadores.Player;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -39,14 +39,14 @@ public class Armada {
     }
 
     //------------------------------------------------------------------------//
-    public void uptade(Jogador player) {
+    public void uptade(Player player) {
         //elemina a nave que não tem mais vida
         Iterator<Americano> it = armada.iterator();
 
         while (it.hasNext()) {
             Americano a = it.next();
             
-            if (a.vida <= 0) {
+            if (a.lifePoints <= 0) {
                 player.ganharPontos(a.valorEmPts);
                 it.remove();
             }

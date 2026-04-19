@@ -11,4 +11,15 @@ public class SistemaDeAsteroides {
         asteroides.add(new Asteroide(20, 20, 38/2, 29/2, Estado_Direcao.NORTE));
     }
     
+    public void uptade() {
+        for (Asteroide asteroide : asteroides) {
+            asteroide.uptade();
+        }
+    }
+    
+    //--------------------------------------------------------------------------
+    private static final short TIMER_COOLDOWN = 300;
+    
+    //--------------------------------------------------------------------------
+    
 }

@@ -1,46 +1,41 @@
 package com.jogo.model.projetil;
 
-import com.jogo.model.Entidade;
+import com.jogo.model.Entity;
 import com.jogo.regras.colisao.HitBox;
 import com.jogo.regras.estados.Estado_Direcao;
 import java.awt.Graphics2D;
 import javax.swing.ImageIcon;
 
-public class Projetil extends Entidade {
+public class Projetil extends Entity {
 
     public boolean acertou = false;
 
     private static final int OFFSET_CANHAO_X = 5;
     private static final int OFFSET_CANHAO_Y = 2;
 
-    public Projetil(int x, int y, float ajuste_referente_a_escala_X, float ajuste_referente_a_escala_Y, Estado_Direcao direcao) {
-        super(0, 0, (2 * 2), (5 * 2));
-        dano = 10;
+    public Projetil(int x, int y, float ajuste_referente_a_escala_X, float ajuste_referente_a_escala_Y, Estado_Direcao directionShooter) {
+        super(0, 0, (2 * 2), (5 * 2), 2, 5);
+        damege = 10;
         this.calculoPos(x, y, ajuste_referente_a_escala_X, ajuste_referente_a_escala_Y);
         sprite = new ImageIcon(getClass().getResource("/objetos/projetel.png")).getImage();
-        velocidade = 10;
+        speed = 10;
 
-        this.ajuste_referente_a_escala_X = largura / 2;
-        this.ajuste_referente_a_escala_Y = altura / 5;
+        this.escala_width = width / 2;
+        this.escala_height = height / 5;
 
-        this.direcao = direcao;
+        this.direction = directionShooter;
         
-        if (direcao == Estado_Direcao.NORTE || direcao == Estado_Direcao.SUL) {
-            altura = (int) this.ajuste_referente_a_escala_Y * 5;
-            largura = (int) this.ajuste_referente_a_escala_X * 2;
-        } 
-        else if (direcao == Estado_Direcao.LESTE || direcao == Estado_Direcao.OESTE) {
-            largura = (int) this.ajuste_referente_a_escala_Y * 5;
-            altura = (int) this.ajuste_referente_a_escala_X * 2;
-        }
+        reformular_Posicoes();
     }
-
+    
+    @Override
     public HitBox getHitBox() {
-        return new HitBox(posX, posY, largura, altura);
+        return new HitBox(posX, posY, width, height);
     }
 
+    @Override
     public void desenharSprite(Graphics2D g) {
-        g.drawImage(sprite, posX, posY, largura, altura, null);
+        g.drawImage(sprite, posX, posY, width, height, null);
     }
 
     public void mover() {
@@ -49,46 +44,46 @@ public class Projetil extends Entidade {
         //  direcao = direcao_atirador;
         //}
         
-        if (direcao == Estado_Direcao.NORTE) {
+        if (direction == Estado_Direcao.NORTE) {
             moverCima();
         }
-        if (direcao == Estado_Direcao.SUL) {
+        if (direction == Estado_Direcao.SUL) {
             moverBaixo();
         }
-        if (direcao == Estado_Direcao.LESTE) {
+        if (direction == Estado_Direcao.LESTE) {
             moverDireita();
         }
-        if (direcao == Estado_Direcao.OESTE) {
+        if (direction == Estado_Direcao.OESTE) {
             moverEsquerda();
         }
-        if (direcao == Estado_Direcao.SUDESTE) {
+        if (direction == Estado_Direcao.SUDESTE) {
 
         }
-        if (direcao == Estado_Direcao.SUDOESTE) {
+        if (direction == Estado_Direcao.SUDOESTE) {
 
         }
-        if (direcao == Estado_Direcao.NORDESTE) {
+        if (direction == Estado_Direcao.NORDESTE) {
 
         }
-        if (direcao == Estado_Direcao.NOROESTE) {
+        if (direction == Estado_Direcao.NOROESTE) {
 
         }
     }
 
     private void moverCima() {
-        posY -= velocidade;
+        posY -= speed;
     }
 
     private void moverBaixo() {
-        posY += velocidade;
+        posY += speed;
     }
 
     private void moverEsquerda() {
-        posX -= velocidade;
+        posX -= speed;
     }
 
     private void moverDireita() {
-        posX += velocidade;
+        posX += speed;
     }
 
     private void calculoPos(int x, int y, float ajuste_referente_a_escala_X, float ajuste_referente_a_escala_Y) {
